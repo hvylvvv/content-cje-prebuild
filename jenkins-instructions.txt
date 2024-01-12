@@ -1,0 +1,63 @@
+Parameterizing Builds
+Introduction
+Consider the following scenario: The web dev team has indicated that they have made a recent change to the index project, and that this project now needs to have a name supplied so that the build can be customized. This is a Maven project from the M3 server. The name should be provided in string format, and the name should be steve.
+
+In this lab, we will build a project that requires parameters. We will ensure it accepts a string parameter. This is important to understand, as it is one method used to inject a build time variable into a project.
+
+Solution
+Log in to the Jenkins server using the credentials provided.
+
+Update Jenkins
+Click the bell icon.
+Apply the Migration.
+Click the bell icon.
+Choose Manage Jenkins.
+Choose Go to plugin manager.
+Select all, Download now and install after restart.
+After all the items on the list are marked with an action, Checkmark "Restart Jenkins when installation is complete and no jobs are running."
+Reconnect to Jenkins.
+Create the Webdev Folder and Index Freestyle Project
+In the left-hand menu, select Manage Jenkins.
+Select Global Tool Configuration.
+Next to Maven, select Add Maven.
+Next to Name, enter "M3".
+Ensure Install automatically is selected.
+Click Save.
+In the upper-left corner, select Jenkins.
+Select create new jobs.
+Under Enter an item name, enter "webdev".
+Select Folder.
+Select OK.
+Leave the default settings and select Save.
+Within the webdev folder, select create new jobs.
+Under Enter an item name, enter "index".
+Select Freestyle project.
+Select OK.
+Configure the Index Project to Accept the Name Steve
+Under the General tab, select the This project is parameterized checkbox.
+Under the Add Parameter dropdown menu, select String Parameter.
+Under String Parameter, set the following values:
+Name: name
+Default Value: steve
+Description: (none)
+Select the Source Code Management tab at top.
+Select Git.
+Under Repository URL: enter the Git repo URL provided in the Resources section of the lab.
+Under Build, select the add build step dropdown menu and select Invoke top-level Maven targets.
+Under Invoke top-level Maven targets, set the following values:
+Maven Version: M3
+Goal: clean package
+Select the add build step dropdown menu and select Execute shell.
+Enter bin/makeindex next to Command.
+Under Post-build Actions, select the Add post-build action dropdown menu and select Archive the artifacts.
+Under Post-build Actions, next to Files to archive, type index.jsp.
+Under Excludes, make sure the following boxes are selected:
+Fingerprint all archived artifacts
+Use default excludes
+Treat include and exclude patterns as case sensitive
+Click Save.
+In the left-hand menu, select Build with Parameters.
+Select Build.
+Refresh your browser and select view next to index.jsp.
+Conclusion
+Congratulations — you've completed this hands-on lab!
